@@ -18,4 +18,6 @@ public interface RepositoryAwareService<K extends Serializable, T, R extends Bas
 
     Optional<T> delete(K id);
 
+    R getRepository();
+
 }

@@ -1,2 +1,2 @@
-FROM jetty:9.4.7
-COPY /target/*.war /var/lib/jetty/webapps/api.war
+FROM jetty:9.4.18-alpine
+COPY /target/*.war /var/lib/jetty/webapps/eclassroom.war

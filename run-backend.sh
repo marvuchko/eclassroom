@@ -1,7 +1,7 @@
 # Recompile the project
 ./mvnw clean install
 
-# Stop the running containers if there is any
+# Stop all other containers
 docker-compose down
 
 # Run the containers

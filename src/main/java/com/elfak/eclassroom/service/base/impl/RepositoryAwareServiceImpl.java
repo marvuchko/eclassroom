@@ -12,7 +12,7 @@ public abstract class RepositoryAwareServiceImpl<K extends Serializable, T, R ex
 
     private final R repository;
 
-    protected RepositoryAwareServiceImpl(R repository) {
+    public RepositoryAwareServiceImpl(R repository) {
         this.repository = repository;
     }
 
@@ -33,11 +33,17 @@ public abstract class RepositoryAwareServiceImpl<K extends Serializable, T, R ex
 
     @Override
     public Set<T> getAllByIds(Set<K> ids) {
+        if (ids.isEmpty()) return repository.getAll();
         return repository.getAllByIds(ids);
     }
 
     @Override
     public Optional<T> delete(K id) {
         return repository.delete(id);
+    }
+
+    @Override
+    public R getRepository() {
+        return repository;
     }
 }

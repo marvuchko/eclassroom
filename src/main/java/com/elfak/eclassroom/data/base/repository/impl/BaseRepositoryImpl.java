@@ -1,6 +1,6 @@
 package com.elfak.eclassroom.data.base.repository.impl;
 
-import com.elfak.eclassroom.data.base.hibernate.HibernateSession;
+import com.elfak.eclassroom.data.config.HibernateManager;
 import com.elfak.eclassroom.data.base.repository.BaseRepository;
 import org.hibernate.MultiIdentifierLoadAccess;
 import org.hibernate.Session;
@@ -20,23 +20,24 @@ public abstract class BaseRepositoryImpl<K extends Serializable, T> implements B
 
     private static final Logger LOGGER = Logger.getLogger(BaseRepository.class.getName());
 
-    private final SessionFactory sessionfFactory;
+    private final SessionFactory sessionFactory;
 
     private final Class<T> type;
 
-    public BaseRepositoryImpl( Class<T> type) {
-        sessionfFactory = HibernateSession.getSessionFactory();
+    public BaseRepositoryImpl(Class<T> type) {
+        sessionFactory = HibernateManager.getSessionFactory();
         this.type = type;
     }
 
     @Override
     public Optional<T> createOrUpdate(T entity) {
-        Session session = sessionfFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.getTransaction();
         try {
-            session.saveOrUpdate(entity);
-            Optional<T> optional = Optional.ofNullable(entity);
-            return optional;
+            transaction.begin();
+            session.persist(entity);
+            transaction.commit();
+            return Optional.ofNullable(entity);
         } catch (Exception ex) {
             LOGGER.warning("Error when creating or updating type: " + type.getName() + ", " + ex.getMessage());
             transaction.rollback();
@@ -48,62 +49,50 @@ public abstract class BaseRepositoryImpl<K extends Serializable, T> implements B
 
     @Override
     public Optional<T> getById(K id) {
-        Session session = sessionfFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        try {
-            Optional<T> optional = Optional.ofNullable(session.get(type, id));
-            return optional;
+        try (Session session = sessionFactory.openSession()) {
+            T entity = session.find(type, id);
+            session.detach(entity);
+            return Optional.ofNullable(entity);
         } catch (Exception ex) {
             LOGGER.warning("Error when fetching type: " + type.getName() + ", " + ex.getMessage());
-            transaction.rollback();
-        } finally {
-            session.close();
         }
         return Optional.empty();
     }
 
     @Override
     public Set<T> getAll() {
-        Session session = sessionfFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        try {
+        try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaQuery<T> query = criteriaBuilder.createQuery(type);
-            return new HashSet<>(session.createQuery(query).getResultList());
+            CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(type);
+            CriteriaQuery<T> all = criteriaQuery.select(criteriaQuery.from(type));
+            return new HashSet<>(session.createQuery(all).getResultList());
         } catch (Exception ex) {
             LOGGER.warning("Error when fetching type: " + type.getName() + ", " + ex.getMessage());
-            transaction.rollback();
-        } finally {
-            session.close();
         }
         return new HashSet<>();
     }
 
     @Override
     public Set<T> getAllByIds(Set<K> ids) {
-        Session session = sessionfFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        try {
+        try (Session session = sessionFactory.openSession()) {
             MultiIdentifierLoadAccess<T> tMultiIdentifierLoadAccess = session.byMultipleIds(type);
             return new HashSet<>(tMultiIdentifierLoadAccess.multiLoad(new ArrayList<>(ids)));
         } catch (Exception ex) {
             LOGGER.warning("Error when multiple fetching of type: " + type.getName() + ", " + ex.getMessage());
-            transaction.rollback();
-        } finally {
-            session.close();
         }
         return new HashSet<>();
     }
 
     @Override
     public Optional<T> delete(K id) {
-        Session session = sessionfFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.getTransaction();
         try {
+            transaction.begin();
             T entity = session.get(type, id);
             session.delete(entity);
-            Optional<T> optional = Optional.ofNullable(entity);
-            return optional;
+            transaction.commit();
+            return Optional.ofNullable(entity);
         } catch (Exception ex) {
             LOGGER.warning("Error when deleting of type: " + type.getName() + ", " + ex.getMessage());
             transaction.rollback();
@@ -113,4 +102,8 @@ public abstract class BaseRepositoryImpl<K extends Serializable, T> implements B
         return Optional.empty();
     }
 
+    @Override
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
 }
