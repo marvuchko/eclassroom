@@ -1,1 +1,30 @@
-<p>lectures-list works!</p>
+<table mat-table [dataSource]="lectures$ | async" class="mat-elevation-z8">
+  <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef>Title</th>
+    <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef>Description</th>
+    <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="createdAt">
+    <th mat-header-cell *matHeaderCellDef>Created At</th>
+    <td mat-cell *matCellDef="let element">{{ element.createdAt }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="tutor">
+    <th mat-header-cell *matHeaderCellDef>Tutor</th>
+    <td mat-cell *matCellDef="let element">{{ element.tutor.name }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns" routerLink="/lectures/{{row.videos[0].id}}"></tr>
+</table>
