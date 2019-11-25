@@ -89,7 +89,7 @@ public class VideoThreadMessageResource extends BaseResource {
             responseCode = "200",
             content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = VideoThreadDto.class)
+                    schema = @Schema(implementation = VideoThreadMessageDto.class)
             ),
             description = "Creates a new message for a thread."
     )
