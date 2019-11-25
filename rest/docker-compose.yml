@@ -50,7 +50,7 @@ services:
     links:
       - postgres-db
     volumes:
-      - /home/wizard-of-tomorrow/eclasroom:/var/lib/storage
+      - ${HOST_UPLOAD_DIR}:/var/lib/storage
 
 volumes:
   postgres-db-volume:
