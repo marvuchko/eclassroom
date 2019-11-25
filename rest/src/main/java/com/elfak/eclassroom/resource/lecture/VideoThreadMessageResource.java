@@ -108,5 +108,11 @@ public class VideoThreadMessageResource extends BaseResource {
     public void setThreadMessageService(ThreadMessageService threadMessageService) {
         this.threadMessageService = threadMessageService;
     }
+    
+    @Inject
+    public void setThreadService(ThreadService threadService) {
+        this.threadService = threadService;
+    }
+
 
 }
