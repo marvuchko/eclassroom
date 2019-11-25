@@ -76,7 +76,7 @@ public class VideoResource extends BaseResource {
             responseCode = "200",
             content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = LectureDto.class)
+                    schema = @Schema(implementation = VideoDto.class)
             ),
             description = "Creates a new video for a lecture."
     )
