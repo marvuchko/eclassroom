@@ -28,11 +28,6 @@ public class VideoThreadMessageResource extends BaseResource {
     private ThreadService threadService;
     private ThreadMessageService threadMessageService;
 
-    @Inject
-    public void setThreadService(ThreadService threadService) {
-        this.threadService = threadService;
-    }
-
     @GET
     @ApiResponse(
             responseCode = "200",
