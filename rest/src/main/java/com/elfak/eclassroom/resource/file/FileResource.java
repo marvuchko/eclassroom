@@ -24,7 +24,7 @@ public class FileResource {
     public Response getMedia(@PathParam("fileName") String fileName) {
         StreamingOutput fileStream = output -> {
             try {
-                java.nio.file.Path path = Paths.get(Optional.ofNullable(System.getenv("UPLOAD_DIR")).orElse(UPLOAD_DIR) + fileName);
+                java.nio.file.Path path = Paths.get(Optional.ofNullable(System.getenv("UPLOAD_DIR")).orElse(UPLOAD_DIR) +  "/" + fileName);
                 byte[] data = Files.readAllBytes(path);
                 output.write(data);
                 output.flush();
