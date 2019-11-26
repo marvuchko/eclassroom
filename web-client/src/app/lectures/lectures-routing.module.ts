@@ -7,10 +7,6 @@ import { LectureComponent } from './lecture/lecture.component';
 const routes: Routes = [
   {
     path: 'lectures',
-    redirectTo: 'lectures/list'
-  },
-  {
-    path: 'lectures/list',
     component: LecturesListComponent
   },
   {
