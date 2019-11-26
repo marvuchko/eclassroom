@@ -6,5 +6,5 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-FROM nginx:1.17.1-alpine AS serve
+FROM nginx:1.17.1-alpine
 COPY --from=build /usr/src/app/dist/eclassroom /usr/share/nginx/html
