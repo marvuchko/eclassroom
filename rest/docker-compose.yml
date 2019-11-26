@@ -29,7 +29,7 @@ services:
     links:
       - postgres-db
     volumes:
-      - pgadmin4-volume:/var/lib/pgadmin4-volume
+      - pgadmin4-volume:/pgadmin
 
   jetty-server:
     container_name: jetty-api-server
