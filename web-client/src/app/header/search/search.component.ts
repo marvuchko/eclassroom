@@ -12,4 +12,8 @@ export class SearchComponent implements OnInit {
   ngOnInit() {
   }
 
+  search() {
+    alert('Not implemented yet!');
+  }
+
 }

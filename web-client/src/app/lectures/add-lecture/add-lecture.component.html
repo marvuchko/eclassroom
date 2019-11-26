@@ -1,1 +1,30 @@
-<p>add-lecture works!</p>
+<div class="form">
+    <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input matInput>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Description</mat-label>
+        <input matInput>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Author</mat-label>
+        <input matInput>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Video</mat-label>
+        <input matInput readonly [ngModel]="selectedVideo?.name"(click)="fileInput.click()">
+        <input style="display: none;" #fileInput type="file" (change)="onFileChange($event.target.files[0])" accept="video/*">
+    </mat-form-field>
+
+    <button mat-raised-button (click)="submit()">Submit</button>
+
+</div>

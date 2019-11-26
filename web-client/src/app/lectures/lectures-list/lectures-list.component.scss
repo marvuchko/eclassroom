@@ -1,0 +1,10 @@
+.lectures {
+    width: 100%;
+
+    &__lecture {
+        &:hover {
+            cursor: pointer;
+            background: #EEEEEE;
+        }
+    }
+}

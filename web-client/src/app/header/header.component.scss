@@ -1,13 +1,18 @@
 .header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  &__title {
     display: flex;
-    align-items: center;
-  }
+    justify-content: center;
 
-  &__add-lecture {
-  }
+    &__content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 960px;
+    }
+
+    &__title {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        outline: none;
+    }
 }
