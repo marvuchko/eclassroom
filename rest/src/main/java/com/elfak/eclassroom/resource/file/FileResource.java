@@ -10,13 +10,15 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Optional;
 
+import static com.elfak.eclassroom.service.constants.ServiceEnvironment.UPLOAD_DIR;
+
 @Path(FileResource.BASE_PATH)
 @Tag(name = "Media Files")
 public class FileResource {
 
     static final String BASE_PATH = "/files";
     private static final String FILE_NAME_PATH = "/{fileName}";
-    private static final String UPLOAD_DIR = "/home/wizard-of-tomorrow/eclassroom/";
+    private static final String LOCAL_UPLOAD_DIR = "/home/wizard-of-tomorrow/eclassroom/";
 
     @GET
     @Path(FILE_NAME_PATH)
@@ -25,8 +27,8 @@ public class FileResource {
         StreamingOutput fileStream = output -> {
             try {
                 java.nio.file.Path path = Paths.get(Optional
-                        .ofNullable(System.getenv("UPLOAD_DIR"))
-                        .orElse(UPLOAD_DIR) +  "/" + fileName);
+                        .ofNullable(System.getenv(UPLOAD_DIR))
+                        .orElse(LOCAL_UPLOAD_DIR) + "/" + fileName);
                 byte[] data = Files.readAllBytes(path);
                 output.write(data);
                 output.flush();

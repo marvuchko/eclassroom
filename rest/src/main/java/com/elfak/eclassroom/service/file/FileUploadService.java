@@ -8,17 +8,19 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+import static com.elfak.eclassroom.service.constants.ServiceEnvironment.UPLOAD_DIR;
+
 public class FileUploadService {
 
     private static final Logger LOGGER = Logger.getLogger(FileUploadService.class.getName());
 
-    private static final String UPLOAD_DIR = "/home/wizard-of-tomorrow/eclassroom";
+    private static final String LOCAL_UPLOAD_DIR = "/home/wizard-of-tomorrow/eclassroom";
 
     public FileInfo saveFile(InputStream inputStream, FormDataContentDisposition fileMeta, String serverPath) {
 
         String extension = fileMeta.getFileName().split("[.]")[1];
         String fileName = UUID.randomUUID().toString() + "." + extension;
-        String uploadDir = Optional.ofNullable(System.getenv("UPLOAD_DIR")).orElse(UPLOAD_DIR);
+        String uploadDir = Optional.ofNullable(System.getenv(UPLOAD_DIR)).orElse(LOCAL_UPLOAD_DIR);
 
         FileInfo fileInfo = new FileInfo();
 

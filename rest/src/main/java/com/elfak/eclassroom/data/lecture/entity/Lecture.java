@@ -16,7 +16,7 @@ public class Lecture extends Base {
     @Column
     private String description;
 
-    @OneToMany(mappedBy = "lecture", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "lecture", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private Set<Video> videos;
 
     @ManyToOne

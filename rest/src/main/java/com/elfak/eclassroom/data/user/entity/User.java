@@ -16,7 +16,7 @@ public class User extends Base {
     @Column
     private String email;
 
-    @OneToMany(mappedBy = "tutor", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "tutor", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private Set<Lecture> lectures;
 
     public String getFullName() {

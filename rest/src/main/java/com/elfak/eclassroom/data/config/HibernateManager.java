@@ -11,6 +11,8 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+import static com.elfak.eclassroom.data.constants.DataEnvirnoment.*;
+
 public class HibernateManager {
 
     private static final Logger LOGGER = Logger.getLogger(HibernateManager.class.getName());
@@ -50,14 +52,14 @@ public class HibernateManager {
         Properties settings = new Properties();
         settings.put(Environment.DRIVER, "org.postgresql.Driver");
         settings.put(Environment.URL, "jdbc:postgresql://" +
-                Optional.ofNullable(System.getenv("DB_URL")).orElse("localhost") + ":" +
-                Optional.ofNullable(System.getenv("DB_PORT")).orElse("5432") + "/" +
-                Optional.ofNullable(System.getenv("DB_NAME")).orElse("eclassroom"));
+                Optional.ofNullable(System.getenv(DB_URL)).orElse("localhost") + ":" +
+                Optional.ofNullable(System.getenv(DB_PORT)).orElse("5432") + "/" +
+                Optional.ofNullable(System.getenv(DB_NAME)).orElse("eclassroom"));
         settings.put(Environment.USER, Optional
-                .ofNullable(System.getenv("DB_USER"))
+                .ofNullable(System.getenv(DB_USER))
                 .orElse("root"));
         settings.put(Environment.PASS, Optional
-                .ofNullable(System.getenv("DB_PASSWORD"))
+                .ofNullable(System.getenv(DB_PASSWORD))
                 .orElse("root"));
         settings.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQL10Dialect");
         settings.put(Environment.SHOW_SQL, "true");

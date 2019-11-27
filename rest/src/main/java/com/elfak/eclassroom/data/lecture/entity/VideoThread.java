@@ -16,7 +16,7 @@ public class VideoThread extends Base {
     @JoinColumn(name = "id_video")
     private Video video;
 
-    @OneToMany(mappedBy = "videoThread", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "videoThread", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private Set<VideoThreadMessage> messages;
 
     public String getTitle() {

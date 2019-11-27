@@ -19,10 +19,8 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 import java.io.InputStream;
 import java.util.Optional;
 import java.util.Set;
@@ -35,8 +33,6 @@ import static java.util.Collections.singleton;
 public class LectureResource extends BaseResource {
 
     static final String BASE_PATH = "/lecture";
-    @Context
-    private UriInfo uri;
     private LectureService lectureService;
     private UserService userService;
     private FileUploadService fileUploadService;
@@ -112,12 +108,12 @@ public class LectureResource extends BaseResource {
             @FormDataParam("video") FormDataContentDisposition videoMeta
     ) {
         Optional<FileInfo> thumbnailInfo = Optional
-                .ofNullable(fileUploadService.saveFile(thumbnailInputStream, thumbnailMeta, getServerPath(uri)));
+                .ofNullable(fileUploadService.saveFile(thumbnailInputStream, thumbnailMeta, getServerFilePath()));
 
         if (!thumbnailInfo.isPresent()) return Response.serverError().build();
 
         Optional<FileInfo> videoInfo = Optional
-                .ofNullable(fileUploadService.saveFile(videoInputStream, videoMeta, getServerPath(uri)));
+                .ofNullable(fileUploadService.saveFile(videoInputStream, videoMeta, getServerFilePath()));
 
         if (!videoInfo.isPresent()) return Response.serverError().build();
 

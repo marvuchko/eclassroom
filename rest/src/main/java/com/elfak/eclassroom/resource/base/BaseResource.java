@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -16,8 +17,9 @@ import static java.util.stream.Collectors.toSet;
 public abstract class BaseResource {
 
     protected static final String ID_PATH = "/{id}";
-
-    private final ModelMapper modelMapper = new ModelMapper();
+    private static final ModelMapper modelMapper = new ModelMapper();
+    @Context
+    protected UriInfo uriInfo;
 
     protected Object map(Object source, Class<?> destination) {
         return modelMapper.map(source, destination);
@@ -28,16 +30,15 @@ public abstract class BaseResource {
     }
 
     protected Response entityResponse(Object source, Class<?> destination) {
-        return Response.ok(modelMapper.map(source, destination)).build();
+        return Response.ok(map(source, destination)).build();
     }
 
     protected Response listResponse(Set<?> source, Class<?> destination) {
-        Set<?> collect = source.stream().map(element -> map(element, destination)).collect(toSet());
-        return Response.ok(collect).build();
+        return Response.ok(map(source, destination)).build();
     }
 
-    protected String getServerPath(UriInfo uri) {
-        return uri.getBaseUri() + "files";
+    protected String getServerFilePath() {
+        return uriInfo.getBaseUri() + "files";
     }
 
 }

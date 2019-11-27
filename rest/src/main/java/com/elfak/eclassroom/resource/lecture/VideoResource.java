@@ -3,7 +3,6 @@ package com.elfak.eclassroom.resource.lecture;
 import com.elfak.eclassroom.data.lecture.entity.Lecture;
 import com.elfak.eclassroom.data.lecture.entity.Video;
 import com.elfak.eclassroom.dto.file.FileInfo;
-import com.elfak.eclassroom.dto.lecture.LectureDto;
 import com.elfak.eclassroom.dto.lecture.VideoDto;
 import com.elfak.eclassroom.resource.base.BaseResource;
 import com.elfak.eclassroom.service.file.FileUploadService;
@@ -19,10 +18,8 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 import java.io.InputStream;
 import java.util.Optional;
 import java.util.Set;
@@ -33,8 +30,6 @@ import java.util.UUID;
 public class VideoResource extends BaseResource {
 
     static final String BASE_PATH = "lecture/{lectureId}/video";
-    @Context
-    UriInfo uri;
     private LectureService lectureService;
     private VideoService videoService;
     private FileUploadService fileUploadService;
@@ -96,12 +91,12 @@ public class VideoResource extends BaseResource {
         if (!lecture.isPresent()) return Response.noContent().build();
 
         Optional<FileInfo> thumbnailInfo = Optional
-                .ofNullable(fileUploadService.saveFile(thumbnailInputStream, thumbnailMeta, getServerPath(uri)));
+                .ofNullable(fileUploadService.saveFile(thumbnailInputStream, thumbnailMeta, getServerFilePath()));
 
         if (!thumbnailInfo.isPresent()) return Response.serverError().build();
 
         Optional<FileInfo> videoInfo = Optional
-                .ofNullable(fileUploadService.saveFile(videoInputStream, videoMeta, getServerPath(uri)));
+                .ofNullable(fileUploadService.saveFile(videoInputStream, videoMeta, getServerFilePath()));
 
         if (!videoInfo.isPresent()) return Response.serverError().build();
 

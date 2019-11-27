@@ -25,7 +25,7 @@ public class Video extends Base {
     @JoinColumn(name = "id_lecture")
     private Lecture lecture;
 
-    @OneToMany(mappedBy = "video", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "video", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private Set<VideoThread> videoThreads;
 
     public String getTitle() {
