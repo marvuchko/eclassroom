@@ -1,6 +1,6 @@
 <div class="lecture" *ngIf="lecture$ | async as lecture">
     <div class="lecture__video">
-        <video src="{{lecture.videos[0].videoUrl}}"></video>
+        <video class="lecture__video-player" src="{{lecture.videos[0].videoUrl}}" controls autoplay>Your browser does not support video control</video>
     </div>
     <div class="lecture__info">
         <div class="lecture__video-title">{{lecture.videos[0].title}}</div>
