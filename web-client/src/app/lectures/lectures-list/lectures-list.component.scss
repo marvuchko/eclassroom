@@ -1,10 +1,16 @@
 .lectures {
     width: 100%;
 
-    &__lecture {
+    .lecture {
         &:hover {
             cursor: pointer;
             background: #EEEEEE;
+        }
+
+        &__delete {
+          &:hover {
+            color: #f44336;
+          }
         }
     }
 }

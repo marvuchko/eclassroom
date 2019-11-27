@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Lecture } from '../models/lecture';
 import { VideoThread } from '../models/video-thread';
+import { IAddLectureOptions } from '../models/add-lecture-options';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +26,17 @@ export class LecturesDataService {
   }
 
   deleteLecture(lectureId: string): Observable<boolean> {
-    throw new Error('Not implemented yet');
+    const url = `${this.baseUrl}/${lectureId}`;
+    return this.http.delete<boolean>(url);
   }
 
-  addLecture() { }
+  addLecture(options: IAddLectureOptions): Observable<Lecture> {
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    const formData = new FormData();
+    Object.keys(options).forEach(key => {
+      formData.append(key, options[key]);
+    });
+    return this.http.post<Lecture>(this.baseUrl, formData, { headers });
+  }
 }

@@ -1,30 +1,39 @@
 <table mat-table [dataSource]="lectures$ | async" class="mat-elevation-z8 lectures">
-  <!--- Note that these columns can be defined in any order.
+    <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="title">
-    <th mat-header-cell *matHeaderCellDef>Title</th>
-    <td mat-cell *matCellDef="let element">{{ element.title }}</td>
-  </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>Title</th>
+        <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+    </ng-container>
 
-  <!-- Weight Column -->
-  <ng-container matColumnDef="description">
-    <th mat-header-cell *matHeaderCellDef>Description</th>
-    <td mat-cell *matCellDef="let element">{{ element.description }}</td>
-  </ng-container>
+    <!-- Weight Column -->
+    <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+    </ng-container>
 
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="createdAt">
-    <th mat-header-cell *matHeaderCellDef>Created At</th>
-    <td mat-cell *matCellDef="let element">{{ element.createdAt | date: 'medium' }}</td>
-  </ng-container>
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef>Created At</th>
+        <td mat-cell *matCellDef="let element">{{ element.createdAt | date: 'medium' }}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="tutor">
-    <th mat-header-cell *matHeaderCellDef>Tutor</th>
-    <td mat-cell *matCellDef="let element">{{ element.tutor.fullName }}</td>
-  </ng-container>
+    <ng-container matColumnDef="tutor">
+        <th mat-header-cell *matHeaderCellDef>Tutor</th>
+        <td mat-cell *matCellDef="let element">{{ element.tutor.fullName }}</td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr class="lectures__lecture" mat-row *matRowDef="let row; columns: displayedColumns" routerLink="/lectures/{{row.id}}"></tr>
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+            <button class="lecture__delete" mat-icon-button (click)="deleteLecture($event, element)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr class="lecture" mat-row *matRowDef="let row; columns: displayedColumns" routerLink="/lectures/{{row.id}}"></tr>
 </table>
