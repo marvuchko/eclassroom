@@ -110,12 +110,12 @@ public class LectureResource extends BaseResource {
         Optional<FileInfo> thumbnailInfo = Optional
                 .ofNullable(fileUploadService.saveFile(thumbnailInputStream, thumbnailMeta, getServerFilePath()));
 
-        if (!thumbnailInfo.isPresent()) return Response.serverError().build();
+        if (!thumbnailInfo.isPresent()) return Response.status(400).entity("Video is missing!").build();
 
         Optional<FileInfo> videoInfo = Optional
                 .ofNullable(fileUploadService.saveFile(videoInputStream, videoMeta, getServerFilePath()));
 
-        if (!videoInfo.isPresent()) return Response.serverError().build();
+        if (!videoInfo.isPresent()) return Response.status(400).entity("Video is missing!").build();
 
         User tutor = new User();
         tutor.setFullName(fullName);

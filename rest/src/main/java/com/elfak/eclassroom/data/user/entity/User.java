@@ -2,6 +2,7 @@ package com.elfak.eclassroom.data.user.entity;
 
 import com.elfak.eclassroom.data.base.entity.Base;
 import com.elfak.eclassroom.data.lecture.entity.Lecture;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -16,7 +17,8 @@ public class User extends Base {
     @Column
     private String email;
 
-    @OneToMany(mappedBy = "tutor", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "tutor")
+    @Cascade(value = {org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.DELETE})
     private Set<Lecture> lectures;
 
     public String getFullName() {

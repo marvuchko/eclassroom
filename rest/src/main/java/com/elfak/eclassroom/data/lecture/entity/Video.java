@@ -1,6 +1,7 @@
 package com.elfak.eclassroom.data.lecture.entity;
 
 import com.elfak.eclassroom.data.base.entity.Base;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -25,7 +26,8 @@ public class Video extends Base {
     @JoinColumn(name = "id_lecture")
     private Lecture lecture;
 
-    @OneToMany(mappedBy = "video", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "video")
+    @Cascade(value = {org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.DELETE})
     private Set<VideoThread> videoThreads;
 
     public String getTitle() {

@@ -1,11 +1,13 @@
 package com.elfak.eclassroom.data.base.repository.impl;
 
-import com.elfak.eclassroom.data.config.HibernateManager;
 import com.elfak.eclassroom.data.base.repository.BaseRepository;
+import com.elfak.eclassroom.data.config.HibernateManager;
 import org.hibernate.MultiIdentifierLoadAccess;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -14,11 +16,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.logging.Logger;
 
 public abstract class BaseRepositoryImpl<K extends Serializable, T> implements BaseRepository<K, T> {
 
-    private static final Logger LOGGER = Logger.getLogger(BaseRepository.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseRepository.class);
 
     private final SessionFactory sessionFactory;
 
@@ -35,11 +36,11 @@ public abstract class BaseRepositoryImpl<K extends Serializable, T> implements B
         Transaction transaction = session.getTransaction();
         try {
             transaction.begin();
-            session.persist(entity);
+            session.saveOrUpdate(entity);
             transaction.commit();
             return Optional.ofNullable(entity);
         } catch (Exception ex) {
-            LOGGER.warning("Error when creating or updating type: " + type.getName() + ", " + ex.getMessage());
+            LOGGER.warn("Error when creating or updating type: {}, {}", type.getName(), ex.getMessage());
             transaction.rollback();
         } finally {
             session.close();
@@ -54,7 +55,7 @@ public abstract class BaseRepositoryImpl<K extends Serializable, T> implements B
             session.detach(entity);
             return Optional.ofNullable(entity);
         } catch (Exception ex) {
-            LOGGER.warning("Error when fetching type: " + type.getName() + ", " + ex.getMessage());
+            LOGGER.warn("Error when creating or updating type: {}, {}", type.getName(), ex.getMessage());
         }
         return Optional.empty();
     }
@@ -67,7 +68,7 @@ public abstract class BaseRepositoryImpl<K extends Serializable, T> implements B
             CriteriaQuery<T> all = criteriaQuery.select(criteriaQuery.from(type));
             return new HashSet<>(session.createQuery(all).getResultList());
         } catch (Exception ex) {
-            LOGGER.warning("Error when fetching type: " + type.getName() + ", " + ex.getMessage());
+            LOGGER.warn("Error when fetching type: {}, {}", type.getName(), ex.getMessage());
         }
         return new HashSet<>();
     }
@@ -78,7 +79,7 @@ public abstract class BaseRepositoryImpl<K extends Serializable, T> implements B
             MultiIdentifierLoadAccess<T> tMultiIdentifierLoadAccess = session.byMultipleIds(type);
             return new HashSet<>(tMultiIdentifierLoadAccess.multiLoad(new ArrayList<>(ids)));
         } catch (Exception ex) {
-            LOGGER.warning("Error when multiple fetching of type: " + type.getName() + ", " + ex.getMessage());
+            LOGGER.warn("Error when multiple fetching of type: {}, {}", type.getName(), ex.getMessage());
         }
         return new HashSet<>();
     }
@@ -94,7 +95,7 @@ public abstract class BaseRepositoryImpl<K extends Serializable, T> implements B
             transaction.commit();
             return Optional.ofNullable(entity);
         } catch (Exception ex) {
-            LOGGER.warning("Error when deleting of type: " + type.getName() + ", " + ex.getMessage());
+            LOGGER.warn("Error when deleting of type: {}, {}", type.getName(), ex.getMessage());
             transaction.rollback();
         } finally {
             session.close();
