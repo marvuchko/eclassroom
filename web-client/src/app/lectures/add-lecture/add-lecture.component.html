@@ -19,11 +19,17 @@
         <input matInput required formControlName="email">
     </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Video</mat-label>
-        <input matInput required readonly (click)="fileInput.click()" [value]="addLectureGroup.get('video').value?.name">
-        <input style="display: none;" #fileInput type="file" (change)="onFileChange($event.target.files[0])" accept="video/*">
-    </mat-form-field>
+    <div class="form__video">
+        <mat-form-field class="form__video-field">
+            <mat-label>Video</mat-label>
+            <input matInput required readonly [value]="addLectureGroup.get('video').value?.name">
+            <input style="display: none;" #fileInput type="file" (change)="onFileChange($event.target.files[0])"
+                accept="video/*">
+        </mat-form-field>
+        <button class="form__video-button" type="button" mat-raised-button (click)="fileInput.click()">
+            <mat-icon>videocam</mat-icon>
+        </button>
+    </div>
 
     <button type="submit" color="primary" mat-raised-button>Submit</button>
 </form>
