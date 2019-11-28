@@ -3,4 +3,17 @@
     margin: 0 auto;
     display: flex;
     flex-direction: column;
+
+    &__video {
+        display: flex;
+        align-items: baseline;
+
+        &-field {
+            flex-grow: 1;
+        }
+
+        &-button {
+            margin-left: 10px;
+        }
+    }
 }
