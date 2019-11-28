@@ -13,7 +13,7 @@ make a discussion threads that are releated to lecture's video timeline.
 ## Database Schema
 ![schema](.gitimg/schema.png)
 
-## Consuming the API
+## How to start the system
 
 1. Execute shell script `start-system.sh`. It will start the entire system.
 2. Base url for API calls is `localhost:8080/eclassroom/api`.
