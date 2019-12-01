@@ -12,6 +12,10 @@ public class VideoThreadDto extends BaseDto {
 
     private String description;
 
+    private String authorName;
+
+    private String authorEmail;
+
     private Set<VideoThreadMessageDto> messages;
 
     public long getVideoTimestamp() {
@@ -36,6 +40,22 @@ public class VideoThreadDto extends BaseDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public String getAuthorEmail() {
+        return authorEmail;
+    }
+
+    public void setAuthorEmail(String authorEmail) {
+        this.authorEmail = authorEmail;
     }
 
     public Set<VideoThreadMessageDto> getMessages() {

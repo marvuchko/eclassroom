@@ -19,6 +19,12 @@ public class VideoThread extends Base {
     @Column
     private String description;
 
+    @Column
+    private String authorName;
+
+    @Column
+    private String authorEmail;
+
     @ManyToOne
     @JoinColumn(name = "id_video")
     private Video video;
@@ -49,6 +55,22 @@ public class VideoThread extends Base {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public String getAuthorEmail() {
+        return authorEmail;
+    }
+
+    public void setAuthorEmail(String authorEmail) {
+        this.authorEmail = authorEmail;
     }
 
     public Video getVideo() {
