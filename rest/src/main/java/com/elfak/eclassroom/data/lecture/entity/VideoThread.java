@@ -16,6 +16,9 @@ public class VideoThread extends Base {
     @Column
     private String title;
 
+    @Column
+    private String description;
+
     @ManyToOne
     @JoinColumn(name = "id_video")
     private Video video;
@@ -38,6 +41,14 @@ public class VideoThread extends Base {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Video getVideo() {
