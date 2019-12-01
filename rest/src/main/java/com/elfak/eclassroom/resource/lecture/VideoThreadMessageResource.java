@@ -92,7 +92,7 @@ public class VideoThreadMessageResource extends BaseResource {
         Optional<VideoThread> threadResult = threadService.getById(threadId);
         if (!threadResult.isPresent()) return Response.noContent().build();
         VideoThread thread = threadResult.get();
-        VideoThreadMessage message = (VideoThreadMessage) map(body, VideoThreadMessageDto.class);
+        VideoThreadMessage message = (VideoThreadMessage) map(body, VideoThreadMessage.class);
         message.setVideoThread(thread);
         Optional<VideoThreadMessage> messageResult = threadMessageService.createOrUpdate(message);
         if (messageResult.isPresent()) return entityResponse(messageResult.get(), VideoThreadMessageDto.class);
