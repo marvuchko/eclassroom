@@ -4,21 +4,11 @@ import com.elfak.eclassroom.dto.base.BaseDto;
 
 public class VideoThreadMessageDto extends BaseDto {
 
-    private long videoTimestamp;
-
     private String content;
 
     private String authorFullName;
 
     private String authorEmail;
-
-    public long getVideoTimestamp() {
-        return videoTimestamp;
-    }
-
-    public void setVideoTimestamp(long videoTimestamp) {
-        this.videoTimestamp = videoTimestamp;
-    }
 
     public String getContent() {
         return content;

@@ -11,6 +11,9 @@ import java.util.Set;
 public class VideoThread extends Base {
 
     @Column
+    private long videoTimestamp;
+
+    @Column
     private String title;
 
     @ManyToOne
@@ -20,6 +23,14 @@ public class VideoThread extends Base {
     @OneToMany(mappedBy = "videoThread")
     @Cascade(value = {org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.DELETE})
     private Set<VideoThreadMessage> messages;
+
+    public long getVideoTimestamp() {
+        return videoTimestamp;
+    }
+
+    public void setVideoTimestamp(long videoTimestamp) {
+        this.videoTimestamp = videoTimestamp;
+    }
 
     public String getTitle() {
         return title;

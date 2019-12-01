@@ -22,7 +22,7 @@ import java.util.UUID;
 @Tag(name = "Threads")
 public class VideoThreadResource extends BaseResource {
 
-    static final String BASE_URL = "video/{videoId}/thread";
+    static final String BASE_URL = "/video/{videoId}/thread";
 
     private VideoService videoService;
     private ThreadService threadService;
@@ -89,7 +89,7 @@ public class VideoThreadResource extends BaseResource {
     )
     public Response create(@PathParam("videoId") UUID videoId, VideoThreadDto body) {
         Optional<Video> videoResult = videoService.getById(videoId);
-        if (videoResult.isPresent()) return Response.noContent().build();
+        if (!videoResult.isPresent()) return Response.noContent().build();
         Video video = videoResult.get();
         VideoThread thread = (VideoThread) map(body, VideoThread.class);
         thread.setVideo(video);

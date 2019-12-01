@@ -10,9 +10,6 @@ import javax.persistence.*;
 public class VideoThreadMessage extends Base {
 
     @Column
-    private long videoTimestamp;
-
-    @Column
     @Lob
     private String content;
 
@@ -25,14 +22,6 @@ public class VideoThreadMessage extends Base {
 
     @Column
     private String authorEmail;
-
-    public long getVideoTimestamp() {
-        return videoTimestamp;
-    }
-
-    public void setVideoTimestamp(long videoTimestamp) {
-        this.videoTimestamp = videoTimestamp;
-    }
 
     public String getContent() {
         return content;

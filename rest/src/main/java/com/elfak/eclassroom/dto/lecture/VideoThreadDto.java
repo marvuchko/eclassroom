@@ -6,9 +6,19 @@ import java.util.Set;
 
 public class VideoThreadDto extends BaseDto {
 
+    private long videoTimestamp;
+
     private String title;
 
     private Set<VideoThreadMessageDto> messages;
+
+    public long getVideoTimestamp() {
+        return videoTimestamp;
+    }
+
+    public void setVideoTimestamp(long videoTimestamp) {
+        this.videoTimestamp = videoTimestamp;
+    }
 
     public String getTitle() {
         return title;
