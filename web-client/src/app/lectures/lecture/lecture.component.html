@@ -1,9 +1,11 @@
 <div class="lecture" *ngIf="lecture$ | async as lecture">
     <div class="lecture__video">
-        <video class="lecture__video-player" src="{{lecture.videos[0].videoUrl}}" controls autoplay>Your browser does not support video control</video>
+        <video #videoControl class="lecture__video-player" [src]="lecture.videos[0].videoUrl" type="video/mp4" controls autoplay preload>Your browser does not support HTML5 video</video>
     </div>
     <div class="lecture__info">
         <div class="lecture__video-title">{{lecture.videos[0].title}}</div>
         <div class="lecture__video-subtitle">{{lecture.tutor.fullName}} &bull; {{lecture.videos[0].createdAt | date}}</div>
     </div>
+    <mat-divider class="lecture__divider"></mat-divider>
+    <app-video-threads class="lecture__threads" [videoId]="lecture.videos[0].id" [videoThreads]="lecture.videos[0].threads" [videoDuration]="videoDuration" [videoTimestamp]="videoTimestamp"></app-video-threads>
 </div>

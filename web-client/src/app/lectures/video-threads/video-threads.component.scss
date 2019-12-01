@@ -1,0 +1,78 @@
+.threads {
+  &__user {
+    &-field {
+      margin-right: 10px;
+    }
+  }
+
+  &__new-question {
+    width: 100%;
+
+    &-input {
+      display: block;
+    }
+
+    &-action {
+      margin-left: 10px;
+    }
+
+    &-actions {
+      display: flex;
+      flex-direction: row-reverse;
+    }
+  }
+}
+
+.thread {
+  &__message {
+    display: flex;
+    margin-top: 20px;
+    margin-left: 40px;
+
+    &-author-name {
+      font-weight: 500;
+      color: #212121;
+    }
+
+    &-title {
+      font-weight: 100;
+    }
+
+    &-author-avatar {
+      font-size: 40px;
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  &__question {
+    display: flex;
+    margin-top: 20px;
+
+    &-author-name {
+      font-weight: 500;
+      color: #212121;
+    }
+
+    &-title {
+      font-weight: 100;
+    }
+
+    &-timestamp {
+      margin-left: 10px;
+      color: #606060;
+    }
+
+    &-author-avatar {
+      font-size: 40px;
+      width: 40px;
+      height: 40px;
+    }
+
+    &-reply {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      margin-left: 40px;
+    }
+  }
+}

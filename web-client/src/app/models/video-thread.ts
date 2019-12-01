@@ -5,5 +5,8 @@ export class VideoThread {
   createdAt: string;
   updatedAt: string;
   title: string;
+  videoTimestamp: number;
   messages: VideoThreadMessage[];
+  authorFullName: string;
+  authorEmail: string;
 }

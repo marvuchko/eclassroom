@@ -1,35 +1,35 @@
 <form class="form" [formGroup]="addLectureGroup" (ngSubmit)="submit()">
-    <mat-form-field>
-        <mat-label>Title</mat-label>
-        <input matInput required formControlName="title">
+  <h1 class="form__title">Add new lecture</h1>
+  <mat-form-field>
+    <mat-label>Title</mat-label>
+    <input matInput required formControlName="title">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <input matInput required formControlName="description">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Author</mat-label>
+    <input matInput required formControlName="author">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput required formControlName="email">
+  </mat-form-field>
+
+  <div class="form__video">
+    <mat-form-field class="form__video-field">
+      <mat-label>Video</mat-label>
+      <input matInput required readonly [value]="addLectureGroup.get('video').value?.name">
+      <input style="display: none;" #fileInput type="file" (change)="onFileChange($event.target.files[0])" accept="video/*">
     </mat-form-field>
+    <button class="form__video-button" type="button" mat-raised-button (click)="fileInput.click()">
+      <mat-icon>videocam</mat-icon>
+    </button>
+  </div>
 
-    <mat-form-field>
-        <mat-label>Description</mat-label>
-        <input matInput required formControlName="description">
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>Author</mat-label>
-        <input matInput required formControlName="author">
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>Email</mat-label>
-        <input matInput required formControlName="email">
-    </mat-form-field>
-
-    <div class="form__video">
-        <mat-form-field class="form__video-field">
-            <mat-label>Video</mat-label>
-            <input matInput required readonly [value]="addLectureGroup.get('video').value?.name">
-            <input style="display: none;" #fileInput type="file" (change)="onFileChange($event.target.files[0])"
-                accept="video/*">
-        </mat-form-field>
-        <button class="form__video-button" type="button" mat-raised-button (click)="fileInput.click()">
-            <mat-icon>videocam</mat-icon>
-        </button>
-    </div>
-
-    <button type="submit" color="primary" mat-raised-button>Submit</button>
+  <button type="submit" color="primary" mat-raised-button>Submit</button>
 </form>
