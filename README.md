@@ -11,11 +11,11 @@ make a discussion threads that are releated to lecture's video timeline.
   to provide folder where uploaded videos and images will be stored.
 
 ## Database Schema
-![schema](./gitimg/schema.png)
+![schema](.gitimg/schema.png)
 
-## Consuming the API
+## How to start the system
 
-1. Execute shell script `run-backend.sh`. It will start the API.
+1. Execute shell script `start-system.sh`. It will start the entire system.
 2. Base url for API calls is `localhost:8080/eclassroom/api`.
 3. Swagger documentation is available on `localhost:8080/eclassroom/swagger-ui/index.html`.
 
