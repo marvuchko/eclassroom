@@ -90,7 +90,7 @@ public class VideoThreadMessageResource extends BaseResource {
     )
     public Response create(@PathParam("threadId") UUID threadId, VideoThreadMessageDto body) {
         Optional<VideoThread> threadResult = threadService.getById(threadId);
-        if (threadResult.isPresent()) return Response.noContent().build();
+        if (!threadResult.isPresent()) return Response.noContent().build();
         VideoThread thread = threadResult.get();
         VideoThreadMessage message = (VideoThreadMessage) map(body, VideoThreadMessageDto.class);
         message.setVideoThread(thread);
