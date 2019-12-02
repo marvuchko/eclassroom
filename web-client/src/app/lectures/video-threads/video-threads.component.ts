@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { VideoThread } from 'src/app/models/video-thread';
 import { IStartThreadOptions } from 'src/app/models/start-thread-options';
 import { VideoThreadsDataService } from '../video-threads-data.service';
+import { VideoThreadMessage } from 'src/app/models/video-thread-message';
 
 @Component({
   selector: 'app-video-threads',
@@ -49,15 +50,20 @@ export class VideoThreadsComponent implements OnInit {
     const title = this.titleFormControl.value;
     const videoTimestamp = this.videoTimestamp;
     const authorEmail = prompt('Email');
-    const authorFullName = prompt('Name');
+    const authorName = prompt('Name');
     const options: IStartThreadOptions = {
       videoId,
       title,
       videoTimestamp,
       authorEmail,
-      authorFullName
+      authorName
     };
     this.threadsService.startThread(options).subscribe({
+      complete: () => {
+        this.inEditMode = false;
+        this.titleFormControl.setValue(null);
+      },
+      next: (thread: VideoThread) => this.videoThreads.push(thread),
       error: (error: any) => {
         console.log(error);
         alert('Failed to start new thread');
@@ -78,12 +84,12 @@ export class VideoThreadsComponent implements OnInit {
     const authorEmail = prompt('Email');
     const threadId = thread.id;
     this.threadsService.postMessage(threadId, authorName, authorEmail, content).subscribe({
+      complete: () => this.replyThreadId = null,
+      next: (message: VideoThreadMessage) => thread.messages.push(message),
       error: (error: any) => {
         console.log(error);
         alert('Failed to reply');
       }
     });
   }
-
-
 }

@@ -1,6 +1,6 @@
 export interface IStartThreadOptions {
   videoId: string;
-  authorFullName: string;
+  authorName: string;
   authorEmail: string;
   title: string;
   videoTimestamp: number;
