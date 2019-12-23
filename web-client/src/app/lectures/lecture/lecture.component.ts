@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, tap, catchError, delay } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Lecture } from 'src/app/models/lecture';
 import { LecturesDataService } from './../lectures-data.service';
+import { SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-lecture',
@@ -12,19 +13,16 @@ import { LecturesDataService } from './../lectures-data.service';
   styleUrls: ['./lecture.component.scss']
 })
 export class LectureComponent implements OnInit {
-
-  @ViewChild('videoControl', {static: false}) set video(value: ElementRef<HTMLElement>) {
-    if (!value) {
-      return;
-    }
-    value.nativeElement.addEventListener('timeupdate', (event: Event) => this.videoChange(event));
-  }
-
   lecture$: Observable<Lecture>;
+  videoData$: Observable<SafeResourceUrl>;
   videoDuration = 0;
   videoTimestamp = 0;
 
-  constructor(private data: LecturesDataService, private route: ActivatedRoute, private spinner: NgxSpinnerService) { }
+  constructor(
+    private data: LecturesDataService,
+    private route: ActivatedRoute,
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -34,14 +32,35 @@ export class LectureComponent implements OnInit {
       }
       this.spinner.show();
       this.lecture$ = this.data.getLecture(id).pipe(
-        finalize(() => this.spinner.hide())
+        tap(
+          lecture =>
+            (this.videoData$ = this.getVideoData(lecture.videos[0].videoUrl))
+        ),
+        catchError(err => {
+          this.spinner.hide();
+          alert('Failed to load lecture');
+          throw err;
+        })
       );
     });
   }
 
-  videoChange(event: any) {
-    this.videoTimestamp = Math.floor(Number(event.target.currentTime));
-    this.videoDuration = Math.floor(Number(event.target.duration));
+  setDuration(duration: number) {
+    this.videoDuration = duration;
   }
 
+  setCurrentTime(currentTime: number) {
+    this.videoTimestamp = currentTime;
+  }
+
+  getVideoData(videoUrl: string): Observable<SafeResourceUrl> {
+    this.spinner.show();
+    return this.data.getVideoData(videoUrl).pipe(
+      finalize(() => this.spinner.hide()),
+      catchError(err => {
+        alert('Failed to load video');
+        throw err;
+      })
+    );
+  }
 }

@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { environment } from './../../environments/environment';
 import { Lecture } from '../models/lecture';
 import { IAddLectureOptions } from '../models/add-lecture-options';
+import { map } from 'rxjs/operators';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ import { IAddLectureOptions } from '../models/add-lecture-options';
 export class LecturesDataService {
   private lectureBaseUrl = `${environment.server}/eclassroom/api/lecture`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private domSanitizer: DomSanitizer) { }
 
   getLectures(): Observable<Lecture[]> {
     return this.http.get<Lecture[]>(this.lectureBaseUrl);
@@ -35,5 +37,13 @@ export class LecturesDataService {
       formData.append(key, options[key]);
     });
     return this.http.post<Lecture>(this.lectureBaseUrl, formData, { headers });
+  }
+
+  getVideoData(videoUrl: string): Observable<SafeResourceUrl> {
+    return this.http.get(videoUrl, {responseType: 'blob'}).pipe(map(response => {
+      const url = URL.createObjectURL(response);
+      const sanitized = this.domSanitizer.bypassSecurityTrustResourceUrl(url);
+      return sanitized;
+    }))
   }
 }
