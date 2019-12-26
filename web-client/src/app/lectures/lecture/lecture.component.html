@@ -1,25 +1,25 @@
-<div class="lecture" *ngIf="lecture$ | async as lecture">
+<div class="lecture" *ngIf="lectureData$ | async as lectureData">
   <div class="lecture__video">
     <app-video-player
-    *ngIf="videoData$ | async as video"
       class="lecture__video-player"
-      [src]="video"
+      [src]="lectureData.videoData"
+      [cues]="lectureData.cues"
       (durationChange)="setDuration($event)"
       (timeUpdate)="setCurrentTime($event)"
     ></app-video-player>
   </div>
   <div class="lecture__info">
-    <div class="lecture__video-title">{{ lecture.videos[0].title }}</div>
+    <div class="lecture__video-title">{{ lectureData.lecture.videos[0].title }}</div>
     <div class="lecture__video-subtitle">
-      {{ lecture.tutor.fullName }} &bull;
-      {{ lecture.videos[0].createdAt | date }}
+      {{ lectureData.lecture.tutor.fullName }} &bull;
+      {{ lectureData.lecture.videos[0].createdAt | date }}
     </div>
   </div>
   <mat-divider class="lecture__divider"></mat-divider>
   <app-video-threads
     class="lecture__threads"
-    [videoId]="lecture.videos[0].id"
-    [videoThreads]="lecture.videos[0].threads"
+    [videoId]="lectureData.lecture.videos[0].id"
+    [videoThreads]="lectureData.lecture.videos[0].threads"
     [videoDuration]="videoDuration"
     [videoTimestamp]="videoTimestamp"
   ></app-video-threads>

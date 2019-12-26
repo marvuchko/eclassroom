@@ -1,9 +1,13 @@
-<vg-player>
+<vg-player (onPlayerReady)="onPlayerReady($event)">
   <vg-overlay-play></vg-overlay-play>
   <vg-buffering></vg-buffering>
   <vg-scrub-bar>
     <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
     <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+    <vg-scrub-bar-cue-points
+      vgFor="singleVideo"
+      [vgCuePoints]="metadataTrack.cues"
+    ></vg-scrub-bar-cue-points>
   </vg-scrub-bar>
   <vg-controls>
     <vg-play-pause></vg-play-pause>
@@ -14,7 +18,16 @@
     <vg-volume></vg-volume>
     <vg-fullscreen></vg-fullscreen>
   </vg-controls>
-  <video #videoControl [vgMedia]="media" #media id="singleVideo" preload="auto" autoplay="true">
+  <video #media [vgMedia]="media" id="singleVideo" preload="auto" (canplay)="onCanPlay()">
     <source [src]="src" type="video/mp4" />
+    <!-- track requires valid vtt file in order to have any cue points at all, so we place empty file-->
+    <track
+      src="assets/empty.vtt" 
+      kind="metadata"
+      label="Cue Points"
+      default
+      #metadataTrack
+      vgCuePoints
+    />
   </video>
 </vg-player>

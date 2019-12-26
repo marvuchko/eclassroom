@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, tap, catchError, delay } from 'rxjs/operators';
+import { finalize, catchError, map, switchMap } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Lecture } from 'src/app/models/lecture';
 import { LecturesDataService } from './../lectures-data.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
+import { getCuePoints } from 'src/app/video-player/cue-points';
 
 @Component({
   selector: 'app-lecture',
@@ -13,8 +14,11 @@ import { SafeResourceUrl } from '@angular/platform-browser';
   styleUrls: ['./lecture.component.scss']
 })
 export class LectureComponent implements OnInit {
-  lecture$: Observable<Lecture>;
-  videoData$: Observable<SafeResourceUrl>;
+  lectureData$: Observable<{
+    lecture: Lecture;
+    videoData: SafeResourceUrl;
+    cues: TextTrackCue[];
+  }>;
   videoDuration = 0;
   videoTimestamp = 0;
 
@@ -31,13 +35,19 @@ export class LectureComponent implements OnInit {
         throw new Error('Lecture id not provided');
       }
       this.spinner.show();
-      this.lecture$ = this.data.getLecture(id).pipe(
-        tap(
-          lecture =>
-            (this.videoData$ = this.getVideoData(lecture.videos[0].videoUrl))
-        ),
+      const lecture$ = this.data.getLecture(id);
+      this.lectureData$ = lecture$.pipe(
+        switchMap(lecture => {
+          const video = lecture.videos[0];
+          const cues = getCuePoints(video.threads);
+          const videoData$ = this.getVideoData(video.videoUrl);
+          return videoData$.pipe(map(videoData => {
+            return {
+              lecture, cues, videoData
+            }
+          }))
+        }),
         catchError(err => {
-          this.spinner.hide();
           alert('Failed to load lecture');
           throw err;
         })
