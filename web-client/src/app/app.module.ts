@@ -9,6 +9,8 @@ import { AppComponent } from './app.component';
 
 import { HeaderModule } from './header/header.module';
 import { LecturesModule } from './lectures/lectures.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +21,8 @@ import { LecturesModule } from './lectures/lectures.module';
     HttpClientModule,
     NgxSpinnerModule,
     HeaderModule,
-    LecturesModule
+    LecturesModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
