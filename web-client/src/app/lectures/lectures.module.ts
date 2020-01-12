@@ -14,9 +14,10 @@ import { AddLectureComponent } from './add-lecture/add-lecture.component';
 import { LecturesRoutingModule } from './lectures-routing.module';
 import { VideoThreadsComponent } from './video-threads/video-threads.component';
 import { VideoPlayerModule } from '../video-player/video-player.module';
+import { AskQuestionComponent } from './ask-question/ask-question.component';
 
 @NgModule({
-  declarations: [LecturesListComponent, LectureComponent, AddLectureComponent, VideoThreadsComponent],
+  declarations: [LecturesListComponent, LectureComponent, AddLectureComponent, VideoThreadsComponent, AskQuestionComponent],
   imports: [
     CommonModule,
     VideoPlayerModule,

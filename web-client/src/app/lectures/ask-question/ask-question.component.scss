@@ -1,0 +1,16 @@
+.question {
+  width: 100%;
+
+  &__input {
+    display: block;
+  }
+
+  &__action {
+    margin-left: 10px;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+}

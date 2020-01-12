@@ -4,23 +4,6 @@
       margin-right: 10px;
     }
   }
-
-  &__new-question {
-    width: 100%;
-
-    &-input {
-      display: block;
-    }
-
-    &-action {
-      margin-left: 10px;
-    }
-
-    &-actions {
-      display: flex;
-      flex-direction: row-reverse;
-    }
-  }
 }
 
 .thread {

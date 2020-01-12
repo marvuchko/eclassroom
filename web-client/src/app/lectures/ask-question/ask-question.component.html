@@ -1,0 +1,16 @@
+<div class="question">
+  <mat-form-field class="question__input" (click)="startEdit()">
+    <input type="text" matInput placeholder="Ask a question" [formControl]="titleFormControl" />
+    <mat-hint align="start"
+      >{{ videoTimestamp * 1000 | date: 'mm:ss' }} / {{ videoDuration * 1000 | date: 'mm:ss' }}</mat-hint
+    >
+  </mat-form-field>
+  <div class="question__actions" [style.visibility]="inEditMode ? 'visible' : 'hidden'">
+    <button mat-raised-button class="question__action" (click)="confirm()" color="primary">
+      Confirm
+    </button>
+    <button mat-button class="question__action" (click)="cancel()">
+      Cancel
+    </button>
+  </div>
+</div>

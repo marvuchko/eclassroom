@@ -16,6 +16,12 @@
     </div>
   </div>
   <mat-divider class="lecture__divider"></mat-divider>
+  <app-ask-question
+    [videoId]="lectureData.lecture.videos[0].id"
+    [videoDuration]="videoDuration"
+    [videoTimestamp]="videoTimestamp"
+    (askQuestion)="askQuestion($event)"
+  ></app-ask-question>
   <app-video-threads
     class="lecture__threads"
     [videoId]="lectureData.lecture.videos[0].id"
