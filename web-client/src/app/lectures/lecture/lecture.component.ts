@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { finalize, catchError, map, switchMap } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Lecture } from 'src/app/models/lecture';
@@ -25,6 +25,7 @@ export class LectureComponent implements OnInit {
   constructor(
     private data: LecturesDataService,
     private route: ActivatedRoute,
+    private router: Router,
     private spinner: NgxSpinnerService
   ) {}
 
@@ -48,8 +49,10 @@ export class LectureComponent implements OnInit {
           }))
         }),
         catchError(err => {
+          this.spinner.hide();
           alert('Failed to load lecture');
-          throw err;
+          this.router.navigateByUrl('/');
+          return of(null);
         })
       );
     });
