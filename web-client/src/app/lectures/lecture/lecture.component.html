@@ -1,29 +1,33 @@
 <div class="lecture" *ngIf="lectureData$ | async as lectureData">
-  <div class="lecture__video">
-    <app-video-player
-      class="lecture__video-player"
-      [src]="lectureData.videoData"
-      [cues]="lectureData.cues"
-      (durationChange)="setDuration($event)"
-      (timeUpdate)="setCurrentTime($event)"
-    ></app-video-player>
-  </div>
-  <div class="lecture__info">
-    <div class="lecture__video-title">{{ lectureData.lecture.videos[0].title }}</div>
-    <div class="lecture__video-subtitle">
-      {{ lectureData.lecture.tutor.fullName }} &bull;
-      {{ lectureData.lecture.videos[0].createdAt | date }}
+  <div class="lecture__video-column">
+    <div class="lecture__video">
+      <app-video-player
+        class="lecture__video-player"
+        [src]="lectureData.videoData"
+        [cues]="lectureData.cues"
+        (durationChange)="setDuration($event)"
+        (timeUpdate)="setCurrentTime($event)"
+      ></app-video-player>
     </div>
+    <div class="lecture__info">
+      <div class="lecture__video-title">{{ lectureData.lecture.videos[0].title }}</div>
+      <div class="lecture__video-subtitle">
+        {{ lectureData.lecture.tutor.fullName }} &bull;
+        {{ lectureData.lecture.videos[0].createdAt | date }}
+      </div>
+    </div>
+    <!-- <mat-divider class="lecture__divider"></mat-divider> -->
+    <app-ask-question
+      [videoId]="lectureData.lecture.videos[0].id"
+      [videoDuration]="videoDuration"
+      [videoTimestamp]="videoTimestamp"
+      (askQuestion)="askQuestion($event)"
+    ></app-ask-question>
   </div>
-  <mat-divider class="lecture__divider"></mat-divider>
-  <app-ask-question
-    [videoId]="lectureData.lecture.videos[0].id"
-    [videoDuration]="videoDuration"
-    [videoTimestamp]="videoTimestamp"
-    (askQuestion)="askQuestion($event)"
-  ></app-ask-question>
-  <app-video-threads
-    class="lecture__threads"
-    [videoThreads]="lectureData.lecture.videos[0].threads"
-  ></app-video-threads>
+  <div class="lecture__threads-column">
+    <app-video-threads
+      class="lecture__threads"
+      [videoThreads]="lectureData.lecture.videos[0].threads"
+    ></app-video-threads>
+  </div>
 </div>

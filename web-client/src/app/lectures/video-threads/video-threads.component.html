@@ -1,34 +1,41 @@
 <div class="threads">
+  <div class="threads__header">
+    <div class="threads__title">Discussions</div>
+    <mat-slide-toggle color="primary">Show all</mat-slide-toggle>
+  </div>
   <div class="threads__list">
     <div class="thread" *ngFor="let thread of videoThreads">
       <div class="thread__question">
         <mat-icon class="thread__question-author-avatar">person</mat-icon>
         <div class="thread__question-content">
-          <span class="thread__question-author-name">{{thread.authorName || 'Anonymous'}}</span>
-          <span class="thread__question-timestamp">{{thread.videoTimestamp * 1000 | date:'mm:ss'}}</span>
-          <div class="thread__question-title">{{thread.title}}</div>
+          <span class="thread__question-author-name">{{ thread.authorName || 'Anonymous' }}</span>
+          <span class="thread__question-timestamp">{{ thread.videoTimestamp * 1000 | date: 'mm:ss' }}</span>
+          <div class="thread__question-title">{{ thread.title }}</div>
         </div>
       </div>
       <div class="thread__message" *ngFor="let message of thread.messages">
         <mat-icon class="thread__message-author-avatar">person</mat-icon>
         <div class="thread__message-content">
-          <span class="thread__message-author-name">{{message.authorFullName || 'Anonymous'}}</span>
-          <div class="thread__message-title">{{message.content}}</div>
+          <span class="thread__message-author-name">{{ message.authorFullName || 'Anonymous' }}</span>
+          <div class="thread__message-title">{{ message.content }}</div>
         </div>
       </div>
       <div class="thread__question-reply">
-        <button mat-stroked-button color="primary" (click)="startReply(thread)" *ngIf="replyThreadId !== thread.id">Reply</button>
+        <button mat-stroked-button color="primary" (click)="startReply(thread)" *ngIf="replyThreadId !== thread.id">
+          Reply
+        </button>
         <ng-container *ngIf="replyThreadId === thread.id">
-          <mat-form-field class="threads__new-question-input">
-            <input #replyInput type="text" matInput placeholder="Add a public reply">
+          <mat-form-field class="thread__question-reply-input">
+            <input #replyInput type="text" matInput placeholder="Add a public reply" />
           </mat-form-field>
-          <div class="threads__new-question-actions">
-            <button mat-raised-button class="threads__new-question-action" (click)="reply(thread, replyInput.value)">Reply</button>
-            <button mat-button class="threads__new-question-action" (click)="cancelReply()">Cancel</button>
+          <div class="thread__question-reply-actions">
+            <button mat-raised-button class="thread__question-reply-action" (click)="reply(thread, replyInput.value)">
+              Reply
+            </button>
+            <button mat-button class="thread__question-reply-action" (click)="cancelReply()">Cancel</button>
           </div>
         </ng-container>
       </div>
-      <mat-divider></mat-divider>
     </div>
   </div>
 </div>
