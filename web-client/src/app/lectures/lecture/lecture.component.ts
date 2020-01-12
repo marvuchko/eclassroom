@@ -9,6 +9,7 @@ import { SafeResourceUrl } from '@angular/platform-browser'
 import { getCuePoints } from 'src/app/video-player/cue-points'
 import { IStartThreadOptions } from 'src/app/models/start-thread-options'
 import { VideoThreadsDataService } from '../video-threads-data.service'
+import { VideoThread } from 'src/app/models/video-thread';
 
 @Component({
   selector: 'app-lecture',

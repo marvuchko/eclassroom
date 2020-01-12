@@ -1,10 +1,10 @@
 <div class="threads">
   <div class="threads__header">
     <div class="threads__title">Discussions</div>
-    <mat-slide-toggle color="primary">Show all</mat-slide-toggle>
+    <mat-slide-toggle color="primary" (change)="onShowAllChange($event.checked)">Show all</mat-slide-toggle>
   </div>
   <div class="threads__list">
-    <div class="thread" *ngFor="let thread of videoThreads">
+    <div class="thread" *ngFor="let thread of currentThreads">
       <div class="thread__question">
         <mat-icon class="thread__question-author-avatar">person</mat-icon>
         <div class="thread__question-content">

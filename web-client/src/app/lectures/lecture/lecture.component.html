@@ -27,6 +27,7 @@
   <div class="lecture__threads-column">
     <app-video-threads
       class="lecture__threads"
+      [videoTimestamp]="videoTimestamp"
       [videoThreads]="lectureData.lecture.videos[0].threads"
     ></app-video-threads>
   </div>

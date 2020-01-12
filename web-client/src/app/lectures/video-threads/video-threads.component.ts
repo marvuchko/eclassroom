@@ -13,11 +13,26 @@ export class VideoThreadsComponent implements OnInit {
   @Input()
   videoThreads: VideoThread[] = [];
 
+  @Input()
+  set videoTimestamp(value: number) {
+    this._videoTimestamp = value;
+    this.triggerFilter();
+  }
+
+  get videoTimestamp() {
+    return this._videoTimestamp;
+  }
+
+  private _videoTimestamp: number;
+
+  currentThreads: VideoThread[] = [];
   replyThreadId: string = null;
+  showAll: boolean;
 
   constructor(private threadsService: VideoThreadsDataService) { }
 
   ngOnInit() {
+    this.currentThreads = this.videoThreads;
   }
 
   startReply(videoThread: VideoThread) {
@@ -40,5 +55,22 @@ export class VideoThreadsComponent implements OnInit {
         alert('Failed to reply');
       }
     });
+  }
+
+  onShowAllChange(value: boolean) {
+    this.showAll = value;
+    this.triggerFilter();
+  }
+
+  private triggerFilter() {
+    this.currentThreads = this.filterCurrentThreads(this.videoThreads, this.showAll, this.videoTimestamp);
+  }
+
+  private filterCurrentThreads(allThreads: VideoThread[], showAll: boolean, timestamp: number, treshold = 5): VideoThread[] {
+    if (showAll) {
+      return allThreads;
+    }
+    const byTimestampTreshold = (thread: VideoThread) => Math.abs(thread.videoTimestamp - timestamp) <= treshold
+    return allThreads.filter(byTimestampTreshold);
   }
 }
