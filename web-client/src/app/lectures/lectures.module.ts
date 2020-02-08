@@ -16,6 +16,7 @@ import { LecturesRoutingModule } from './lectures-routing.module'
 import { VideoThreadsComponent } from './video-threads/video-threads.component'
 import { VideoPlayerModule } from '../video-player/video-player.module'
 import { AskQuestionComponent } from './ask-question/ask-question.component'
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -26,19 +27,19 @@ import { AskQuestionComponent } from './ask-question/ask-question.component'
     AskQuestionComponent,
   ],
   imports: [
-    CommonModule,
+    SharedModule,
     VideoPlayerModule,
-    FormsModule,
-    ReactiveFormsModule,
+    // FormsModule,
+    // ReactiveFormsModule,
     LecturesRoutingModule,
-    NgxSpinnerModule,
-    MatTableModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDividerModule,
-    MatSlideToggleModule,
+    // NgxSpinnerModule,
+    // MatTableModule,
+    // MatInputModule,
+    // MatFormFieldModule,
+    // MatButtonModule,
+    // MatIconModule,
+    // MatDividerModule,
+    // MatSlideToggleModule,
   ],
 })
 export class LecturesModule {}
