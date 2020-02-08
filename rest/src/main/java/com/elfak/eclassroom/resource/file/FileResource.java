@@ -37,7 +37,7 @@ public class FileResource {
             }
         };
 
-        return Response.ok(fileStream).build();
+        return Response.status(206).entity(fileStream).build();
     }
 
 }
