@@ -40,8 +40,10 @@ export class LecturesDataService {
   }
 
   getVideoData(videoUrl: string): Observable<SafeResourceUrl> {
-    return this.http.get(videoUrl, {responseType: 'blob'}).pipe(map(response => {
-      const url = URL.createObjectURL(response);
+
+    return this.http.get(videoUrl, { responseType: "arraybuffer"}).pipe(map(response => {
+      const blob = new Blob([response]);
+      const url = URL.createObjectURL(blob);
       const sanitized = this.domSanitizer.bypassSecurityTrustResourceUrl(url);
       return sanitized;
     }))

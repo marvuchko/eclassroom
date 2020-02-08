@@ -1,4 +1,3 @@
-import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { finalize, catchError } from 'rxjs/operators';
@@ -15,7 +14,7 @@ export class LecturesListComponent implements OnInit {
   lectures$: Observable<Lecture[]>;
   displayedColumns = ['title', 'description', 'createdAt', 'tutor', 'actions'];
 
-  constructor(private data: LecturesDataService, private spinner: NgxSpinnerService, private router: Router) { }
+  constructor(private data: LecturesDataService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.loadLectures();

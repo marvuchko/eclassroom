@@ -8,7 +8,7 @@
       <div class="thread__question">
         <mat-icon class="thread__question-author-avatar">person</mat-icon>
         <div class="thread__question-content">
-          <span class="thread__question-author-name">{{ thread.authorName || 'Anonymous' }}</span>
+          <span class="thread__question-author-name">{{ thread.authorName | dash: 'Anonymous' }}</span>
           <span class="thread__question-timestamp">{{ thread.videoTimestamp * 1000 | date: 'mm:ss' }}</span>
           <div class="thread__question-title">{{ thread.title }}</div>
         </div>
@@ -16,7 +16,7 @@
       <div class="thread__message" *ngFor="let message of thread.messages">
         <mat-icon class="thread__message-author-avatar">person</mat-icon>
         <div class="thread__message-content">
-          <span class="thread__message-author-name">{{ message.authorFullName || 'Anonymous' }}</span>
+          <span class="thread__message-author-name">{{ message.authorFullName | dash: 'Anonymous' }}</span>
           <div class="thread__message-title">{{ message.content }}</div>
         </div>
       </div>
