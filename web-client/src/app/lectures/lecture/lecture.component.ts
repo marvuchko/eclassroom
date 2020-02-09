@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { Observable, of, pipe } from 'rxjs'
+import { Observable, of } from 'rxjs'
 import { finalize, catchError, map, switchMap } from 'rxjs/operators'
 import { NgxSpinnerService } from 'ngx-spinner'
 import { Lecture } from 'src/app/models/lecture'
@@ -9,7 +9,6 @@ import { SafeResourceUrl } from '@angular/platform-browser'
 import { getCuePoints } from 'src/app/video-player/cue-points'
 import { IStartThreadOptions } from 'src/app/models/start-thread-options'
 import { VideoThreadsDataService } from '../video-threads-data.service'
-import { VideoThread } from 'src/app/models/video-thread';
 
 @Component({
   selector: 'app-lecture',
@@ -57,6 +56,7 @@ export class LectureComponent implements OnInit {
           )
         }),
         catchError(err => {
+          console.log(err);
           this.spinner.hide()
           alert('Failed to load lecture')
           this.router.navigateByUrl('/')
@@ -79,8 +79,9 @@ export class LectureComponent implements OnInit {
     return this.data.getVideoData(videoUrl).pipe(
       finalize(() => this.spinner.hide()),
       catchError(err => {
-        alert('Failed to load video')
-        throw err
+        console.log(err);
+        alert('Failed to load video');
+        return of(null);
       })
     )
   }

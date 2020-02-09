@@ -19,7 +19,7 @@
     <vg-fullscreen></vg-fullscreen>
   </vg-controls>
   <video #media [vgMedia]="media" id="singleVideo" preload="auto" (canplay)="onCanPlay()">
-    <source [src]="src" type="video/mp4" />
+    <source *ngIf="src" [src]="src" type="video/mp4"/>
     <!-- track requires valid vtt file in order to have any cue points at all, so we place empty file-->
     <track
       src="assets/empty.vtt" 
